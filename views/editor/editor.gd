@@ -1,10 +1,13 @@
 class_name Editor
 extends Node
 
+signal tool_changed(tool: Tool)
+
 @export var canvas: Canvas
 @export var page_controls: PageControls
 @export var playback_manager: PlaybackManager
 @export var edit_extras: EditExtras
+@export var toolset: Toolset
 
 @export var timeline_manager: TimelineManager
 
@@ -12,7 +15,10 @@ extends Node
 
 var project: Project
 var current_page: Page
-var current_tool: Tool
+var current_tool: Tool:
+	set(value):
+		current_tool = value
+		tool_changed.emit(value)
 
 
 func _ready() -> void:

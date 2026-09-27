@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rhpixg1ij2rv"
-path="res://.godot/imported/eraser_template.png-4636dc1cf9deaf5255fcaa9a4c3a7d3d.ctex"
+uid="uid://bobmkmco0tv2m"
+path="res://.godot/imported/dragger.png-7cb918e0a822bc64ba8d5ef51f304d61.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tools/eraser/big_semi_square/eraser_template.png"
-dest_files=["res://.godot/imported/eraser_template.png-4636dc1cf9deaf5255fcaa9a4c3a7d3d.ctex"]
+source_file="res://assets/icons/dragger.png"
+dest_files=["res://.godot/imported/dragger.png-7cb918e0a822bc64ba8d5ef51f304d61.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c87yu5hb1kes5"
-path="res://.godot/imported/eraser_template.png-7159ce0dc7fce64ab19ca8dd137d7821.ctex"
+path="res://.godot/imported/big_square.png-d8756811485b4d1c12c35ec6841fcb79.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tools/eraser/big_square/eraser_template.png"
-dest_files=["res://.godot/imported/eraser_template.png-7159ce0dc7fce64ab19ca8dd137d7821.ctex"]
+source_file="res://assets/brush_templates/big_square.png"
+dest_files=["res://.godot/imported/big_square.png-d8756811485b4d1c12c35ec6841fcb79.ctex"]
 
 [params]
 
