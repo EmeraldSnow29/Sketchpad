@@ -7,8 +7,9 @@
 [ext_resource type="Script" uid="uid://dg2xr82qtamwp" path="res://system/playback/playback_manager.gd" id="4_uvf6n"]
 [ext_resource type="PackedScene" uid="uid://5ufeyntsmfev" path="res://views/gallery/gallery.tscn" id="6_i41vg"]
 [ext_resource type="PackedScene" uid="uid://d3qj36conyfim" path="res://views/menu/menu.tscn" id="6_o0wpe"]
+[ext_resource type="Script" uid="uid://c6ef7g8gud58w" path="res://system/undo/undo_stack.gd" id="8_rpm6l"]
 
-[node name="Editor" type="Control" unique_id=1442565710 node_paths=PackedStringArray("canvas", "page_controls", "playback_manager", "edit_extras")]
+[node name="Editor" type="Control" unique_id=1442565710 node_paths=PackedStringArray("canvas", "page_controls", "playback_manager", "edit_extras", "timeline_manager")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,6 +21,7 @@ canvas = NodePath("CanvasContainer/CanvasViewport/Canvas")
 page_controls = NodePath("PageControls")
 playback_manager = NodePath("PlaybackManager")
 edit_extras = NodePath("EditExtras")
+timeline_manager = NodePath("EditExtras/Panel/VBoxContainer/TabContainer/Timeline")
 
 [node name="CanvasContainer" type="SubViewportContainer" parent="." unique_id=1491532430]
 layout_mode = 1
@@ -74,6 +76,10 @@ menu = NodePath("../Menu")
 
 [node name="ProjectView" parent="Gallery" index="1" unique_id=1095160411 node_paths=PackedStringArray("editor")]
 editor = NodePath("../..")
+
+[node name="UndoStack" type="Node" parent="." unique_id=5662478]
+script = ExtResource("8_rpm6l")
+metadata/_custom_type_script = "uid://c6ef7g8gud58w"
 
 [connection signal="play_toggle" from="PageControls" to="PlaybackManager" method="toggle_playback_state"]
 
