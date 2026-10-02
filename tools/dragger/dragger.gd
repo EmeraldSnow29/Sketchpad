@@ -19,6 +19,10 @@ func on_pointer_down(_position: Vector2, _canvas: Canvas) -> void:
 	var page: Page = project.frames[project.current_frame]
 	var layer: Image = page.layers[project.current_layer]
 
+	if not dragging:
+		#add existing version of page to undo stack
+		_canvas.undo_stack.add_state(PageDrawUndoInfo.new(page, project.current_frame))
+
 	dragging = true
 	_start_mouse = _position
 	_layer_image = layer.duplicate()

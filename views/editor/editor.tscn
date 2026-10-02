@@ -14,9 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://5ufeyntsmfev" path="res://views/gallery/gallery.tscn" id="6_i41vg"]
 [ext_resource type="PackedScene" uid="uid://d3qj36conyfim" path="res://views/menu/menu.tscn" id="6_o0wpe"]
 [ext_resource type="Resource" uid="uid://bd0lp47175we2" path="res://tools/dragger/dragger.tres" id="7_1733i"]
-[ext_resource type="PackedScene" uid="uid://cjepwvluuh3cc" path="res://views/editor/containers/toolbar/toolbar.tscn" id="8_rpm6l"]
-
 [ext_resource type="Script" uid="uid://c6ef7g8gud58w" path="res://system/undo/undo_stack.gd" id="7_fix21"]
+[ext_resource type="PackedScene" uid="uid://cjepwvluuh3cc" path="res://views/editor/containers/toolbar/toolbar.tscn" id="8_rpm6l"]
 
 [node name="Editor" type="Control" unique_id=1442565710 node_paths=PackedStringArray("canvas", "page_controls", "playback_manager", "edit_extras", "toolset", "timeline_manager")]
 layout_mode = 3
