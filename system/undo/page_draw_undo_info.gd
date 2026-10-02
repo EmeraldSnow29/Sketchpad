@@ -14,13 +14,13 @@ func restore(project: Project) -> void:
 	#restore the page by overwriting it with this replacement
 	project.frames[index] = page
 	project.set_frame(index)
-	
+
 	#fix for undoing adding layers
 	if project.current_layer >= page.layers.size():
 		project.set_layer(page.layers.size() - 1)
-		
+
 	#reconnect signal
 	page.page_update.connect(project._on_page_update)
-	
+
 	page.page_update.emit()
 	#project will emit frames_update

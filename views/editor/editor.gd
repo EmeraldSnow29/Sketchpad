@@ -11,8 +11,6 @@ signal tool_changed(tool: Tool)
 
 @export var timeline_manager: TimelineManager
 
-@onready var undo_stack: UndoStack = $UndoStack
-
 var project: Project
 var current_page: Page
 var current_tool: Tool:
@@ -20,6 +18,7 @@ var current_tool: Tool:
 		current_tool = value
 		tool_changed.emit(value)
 
+@onready var undo_stack: UndoStack = $UndoStack
 
 func _ready() -> void:
 	canvas.canvas_input.connect(_handle_canvas_input)

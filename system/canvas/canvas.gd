@@ -8,6 +8,8 @@ signal canvas_input(event: InputEventMouse)
 
 var _project: Project
 
+var undo_stack: UndoStack
+
 @onready var control_node: Control = $Control
 @onready var layers_node: Node2D = $Control/Layers
 @onready var onion_skin_renderer: OnionSkinRenderer = $Control/OnionSkin
@@ -15,9 +17,6 @@ var _project: Project
 
 @onready var bake_viewport: Viewport = $BakeViewport
 @onready var bake_node: Node2D = $BakeViewport/Bake
-
-var undo_stack: UndoStack
-
 
 func _ready() -> void:
 	camera.movable = camera_movable
@@ -77,7 +76,7 @@ func bake_page() -> void:
 	bake_viewport.size = Vector2(_project.width, _project.height)
 	bake_viewport.render_target_clear_mode = SubViewport.CLEAR_MODE_ALWAYS
 	bake_viewport.transparent_bg = true
-	
+
 	#add existing version of page to undo stack
 	undo_stack.add_state(PageDrawUndoInfo.new(current_page, _project.current_frame))
 

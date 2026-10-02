@@ -131,7 +131,7 @@ func delete_frame(idx: int) -> void:
 	var removed_page = frames[idx]
 	delete_frame_no_undo_signal(idx)
 	delete_page.emit(removed_page, idx)
-	
+
 #deletes frame without calling the undo event creation signal
 func delete_frame_no_undo_signal(idx: int) -> void:
 	frames.remove_at(idx)
