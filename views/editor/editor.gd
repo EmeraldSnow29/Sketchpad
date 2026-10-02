@@ -9,6 +9,8 @@ signal tool_changed(tool: Tool)
 @export var edit_extras: EditExtras
 @export var toolset: Toolset
 
+@export var timeline_manager: TimelineManager
+
 var project: Project
 var current_page: Page
 var current_tool: Tool:
@@ -16,15 +18,19 @@ var current_tool: Tool:
 		current_tool = value
 		tool_changed.emit(value)
 
+@onready var undo_stack: UndoStack = $UndoStack
 
 func _ready() -> void:
 	canvas.canvas_input.connect(_handle_canvas_input)
+	canvas.undo_stack = undo_stack
 
 	page_controls.menu_toggle.connect(edit_extras.open)
 	page_controls.play_toggle.connect(
 		func(): playback_manager.is_playing = !playback_manager.is_playing
 	)
 	page_controls.onion_skin_toggle.connect(canvas.toggle_onion_skin)
+
+	timeline_manager.undo_stack = undo_stack
 
 
 ## Creates a blank project and loads into the editor.
@@ -64,3 +70,7 @@ func _handle_canvas_input(event: InputEvent) -> void:
 		elif event is InputEventMouseMotion:
 			if current_tool is Tool:
 				current_tool.on_pointer_move(canvas_pos, canvas)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("undo") and project:
+		undo_stack.restore_state(project)

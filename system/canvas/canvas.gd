@@ -6,6 +6,8 @@ signal canvas_input(event: InputEventMouse)
 @export var camera_movable: bool = false
 @export var camera: Camera2D
 
+var undo_stack: UndoStack
+
 var _project: Project
 
 @onready var control_node: Control = $Control
@@ -16,7 +18,6 @@ var _project: Project
 @onready var bake_viewport: Viewport = $BakeViewport
 @onready var bake_node: Node2D = $BakeViewport/Bake
 
-
 func _ready() -> void:
 	camera.movable = camera_movable
 
@@ -25,7 +26,10 @@ func attach_project(project: Project) -> void:
 	if _project and _project.new_current_page.is_connected(render_page):
 		_project.new_current_page.disconnect(render_page)
 
+	undo_stack.clear_stack()
 	_project = project
+	_project.create_page.connect(undo_stack._on_create_page)
+	_project.delete_page.connect(undo_stack._on_delete_page)
 
 	if _project:
 		_project.new_current_page.connect(render_page)
@@ -72,6 +76,9 @@ func bake_page() -> void:
 	bake_viewport.size = Vector2(_project.width, _project.height)
 	bake_viewport.render_target_clear_mode = SubViewport.CLEAR_MODE_ALWAYS
 	bake_viewport.transparent_bg = true
+
+	#add existing version of page to undo stack
+	undo_stack.add_state(PageDrawUndoInfo.new(current_page, _project.current_frame))
 
 	# Preventing the odd flicker between render and baking.
 	for node in dynamic_node.get_children():
