@@ -29,7 +29,7 @@ func _ready() -> void:
 		func(): playback_manager.is_playing = !playback_manager.is_playing
 	)
 	page_controls.onion_skin_toggle.connect(canvas.toggle_onion_skin)
-	
+
 	timeline_manager.undo_stack = undo_stack
 
 

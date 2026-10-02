@@ -6,9 +6,9 @@ signal canvas_input(event: InputEventMouse)
 @export var camera_movable: bool = false
 @export var camera: Camera2D
 
-var _project: Project
-
 var undo_stack: UndoStack
+
+var _project: Project
 
 @onready var control_node: Control = $Control
 @onready var layers_node: Node2D = $Control/Layers

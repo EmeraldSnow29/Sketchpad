@@ -1,7 +1,7 @@
 class_name UndoStack
 extends Node
 
-const max_undos = 20
+const MAX_UNDOS = 20
 
 var changes : Array[Resource]
 
@@ -10,10 +10,10 @@ var changes : Array[Resource]
 func add_state(undo_info: UndoInfo) -> void:
 	changes.push_back(undo_info)
 
-	if changes.size() >= max_undos:
+	if changes.size() >= MAX_UNDOS:
 		changes.pop_front()
 
-#restore the last project state	
+#restore the last project state
 func restore_state(project: Project) -> void:
 	var state = changes.pop_back() as UndoInfo
 	if state != null:
