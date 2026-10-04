@@ -3,6 +3,8 @@ extends Resource
 
 signal new_current_page(page: Page)
 signal frames_update
+signal create_page
+signal delete_page
 
 @export var title: String = "New Animation"
 @export var framerate: float = 1.0
@@ -112,6 +114,7 @@ func new_page() -> void:
 	pg.page_update.connect(_on_page_update)
 	frames.append(pg)
 	frames_update.emit()
+	create_page.emit(frames.size() - 1)
 
 
 ## Switch to new frame
@@ -125,9 +128,16 @@ func set_layer(idx: int) -> void:
 
 
 func delete_frame(idx: int) -> void:
+	var removed_page = frames[idx]
+	delete_frame_no_undo_signal(idx)
+	delete_page.emit(removed_page, idx)
+
+#deletes frame without calling the undo event creation signal
+func delete_frame_no_undo_signal(idx: int) -> void:
 	frames.remove_at(idx)
 	if current_frame >= frames.size():
 		current_frame = frames.size() - 1
+	frames_update.emit()
 	new_current_page.emit(frames[current_frame])
 
 

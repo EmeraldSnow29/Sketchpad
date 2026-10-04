@@ -13,6 +13,8 @@ var current_list: LayersList
 var pasteboard_images: Array[Image]
 var pasteboard_names: Array[String]
 
+var undo_stack: UndoStack
+
 var _project: Project
 
 
@@ -81,7 +83,10 @@ func _creating_new_layer() -> void:
 	var layer_idx := _project.current_layer + 1
 	var w := _project.width
 	var h := _project.height
+	undo_stack.add_state(PageDrawUndoInfo.new(_project.frames[frame_idx], frame_idx))
 	_project.frames[frame_idx].create_layer(w, h, Color.TRANSPARENT, layer_idx)
+
+	setup_image_timeline()
 
 
 func _deleting_layers() -> void:
@@ -93,15 +98,31 @@ func _deleting_layers() -> void:
 	deleting_idx.reverse()
 
 	var frames := _project.frames
+	var edited_page = false
+	var deleted = false
+	var page: Page
 
 	for idx in deleting_idx:
 		if frames.size() == 1 && deleting_idx.size() == frames[0].layers.size():
 			return
+
+		if not edited_page:
+			page = current_list.displayed_page.duplicate_deep()
+			edited_page = true
+
 		current_list.displayed_page.delete_layer(idx)
 
 	for frame_index in range(frames.size() - 1, -1, -1):
 		if frames[frame_index].layers.is_empty() && frames.size() > 1:
-			_project.delete_frame(frame_index)
+			#all frames are checked as a sanity check
+			#We only want to add deletion state for the page we are currently deleting
+			if edited_page and not deleted and frame_index == current_list.frame_index:
+				deleted = true
+				undo_stack.add_state(PageDeleteUndoInfo.new(page, current_list.frame_index))
+			_project.delete_frame_no_undo_signal(frame_index)
+
+	if edited_page and not deleted:
+		undo_stack.add_state(PageDrawUndoInfo.new(page, current_list.frame_index))
 
 	if _project.current_frame >= frames.size():
 		_project.set_frame(frames.size() - 1)
@@ -129,6 +150,7 @@ func _on_click_cut() -> void:
 	if not current_list:
 		return
 
+	undo_stack.add_state(PageDrawUndoInfo.new(current_list.displayed_page, current_list.frame_index))
 	current_list.cut()
 	setup_image_timeline()
 
@@ -136,6 +158,8 @@ func _on_click_cut() -> void:
 func _on_click_paste() -> void:
 	if not current_list:
 		return
+
+	undo_stack.add_state(PageDrawUndoInfo.new(current_list.displayed_page, current_list.frame_index))
 	current_list.paste(pasteboard_images, pasteboard_names)
 	setup_image_timeline()
 

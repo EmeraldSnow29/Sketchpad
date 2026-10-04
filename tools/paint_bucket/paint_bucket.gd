@@ -21,6 +21,9 @@ func on_pointer_down(_position: Vector2, _canvas: Canvas) -> void:
 	var initial_vector: Vector3 = Vector3(initial_color.r, initial_color.g, initial_color.b)
 	var fill_color: Color = EditorState.color
 
+	#add existing version of page to undo stack
+	_canvas.undo_stack.add_state(PageDrawUndoInfo.new(current_page, project.current_frame))
+
 	if initial_color == fill_color:
 		return
 

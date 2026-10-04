@@ -17,6 +17,12 @@ func _ready() -> void:
 
 
 func on_pointer_down(_position: Vector2, _canvas: Canvas) -> void:
+	if not _has_last:
+		#run on first frame of erasing
+		#add existing version of page to undo stack
+		var project: Project = _canvas._project
+		var current_page: Page = project.frames[project.current_frame]
+		_canvas.undo_stack.add_state(PageDrawUndoInfo.new(current_page, project.current_frame))
 	_has_last = true
 	_last_pos = _position
 	_place_stamp(_last_pos, _canvas)
