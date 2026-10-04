@@ -32,7 +32,7 @@ func attach_project(project: Project) -> void:
 	if _project:
 		_project.create_page.connect(undo_stack._on_create_page)
 		_project.delete_page.connect(undo_stack._on_delete_page)
-		
+
 		_project.new_current_page.connect(render_page)
 		onion_skin_renderer.attach_project(project)
 
