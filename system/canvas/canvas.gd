@@ -27,9 +27,9 @@ func attach_project(project: Project) -> void:
 		_project.new_current_page.disconnect(render_page)
 
 	undo_stack.clear_stack()
-	_project = project
-	_project.create_page.connect(undo_stack._on_create_page)
-	_project.delete_page.connect(undo_stack._on_delete_page)
+	if project != null:
+		project.create_page.connect(undo_stack._on_create_page)
+		project.delete_page.connect(undo_stack._on_delete_page)
 
 	if _project:
 		_project.new_current_page.connect(render_page)
