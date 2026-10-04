@@ -10,9 +10,12 @@ var height: int = 200
 
 func before_each():
 	var rs = RenderingServer
+	var undo_stack = UndoStack.new()
 	canvas = canvas_scene.instantiate()
 	add_child(canvas)
 	add_child(rs)
+	add_child(undo_stack)
+	canvas.undo_stack = undo_stack
 	project = Project.new()
 	project.new_project(width, height)
 	canvas.attach_project(project)
